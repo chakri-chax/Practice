@@ -60,7 +60,7 @@ const performDonate = async({_name,_mail,_bal,_keyword})=>{
         console.log("Donation started...");
         const _name = "mello"
         const _mail = "lsdkjff"
-        const _bal = 1
+        const _bal = 1000
         const _keyword = "Hello"
         await contract.methods.Donation((_name),(_mail),(_bal),(_keyword)).send({from:account, value:_bal})
         console.log("Success");
@@ -72,10 +72,50 @@ const performDonate = async({_name,_mail,_bal,_keyword})=>{
         
     }
 }
+const getInfoDetails=async()=>{
+  console.log("getInfoDetails entered");
+  const contract = await getEthereumContract()
+ // await balance = getGlobalState("my")
+ const addr = getGlobalState("connectedAccount")
+  const balance = await contract.methods.getInfo(addr).call()
+  console.log("Balance",balance);
+  return balance;
+
+  
+}
+
+const PerformDeposit=async()=>
+  {
+    const contract = await getEthereumContract()
+    const addr = getGlobalState("connectedAccount")
+    const amount = 2;
+
+    await contract.methods.deposit().send({
+      from:addr,
+      value:(amount*(1*10**18))
+    })
+    console.log("Succcess!!");
+    //setGlobalState("balance",amount)
+
+  }
+  const getBagBal=async()=>
+    {
+      console.log("getbagbal entered");
+      const contract  = await getEthereumContract()
+      const balance =await contract.methods.BagBal().call()
+      setGlobalState("balance",balance);
+      console.log("balance",balance);
+      return(balance)
+     
+
+    }
 
 export {
     connectWallet,
     isWallectConnected,
     getEthereumContract,
     performDonate,
+    getInfoDetails,
+    PerformDeposit,  
+    getBagBal,
 }
