@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import { useGlobalState,} from '../store'
-import { performDonate } from '../ConfigureBc'
+import { getInfoDetails, performDonate,getBagBal } from '../ConfigureBc'
+
+import { PerformDeposit } from '../ConfigureBc'
 
 const Form = () => {
 
     const [name,setName]= useState("")
     const [mail,setMail]=useState("ch@gmail.com")
     const[bal,setBal] = useState('')
+    const[balance]= useGlobalState("balance")
     
     const[keyword,setKeyword] = useState("Donation")
     const [connectedAccount]=useGlobalState("connectedAccount");
@@ -36,6 +39,13 @@ const Form = () => {
   return (
     <>
         <div>Form</div>
+
+        <div>
+
+            <p>BagBal : {balance}</p>
+            <p>GetBagBal : {getBagBal}</p>
+
+        </div>
         <form onSubmit={handleSubmit}>
             <div>
                 <label htmlFor='Name :'>Name : </label>
@@ -59,7 +69,11 @@ const Form = () => {
             
 
             <button type='submit'>Donate</button>
+            
         </form>
+        <button onClick={getInfoDetails}> getInfo </button><br/>
+
+        <button onClick={PerformDeposit}>Perform Deposit</button>
        
             
             {
